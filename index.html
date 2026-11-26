@@ -1,1184 +1,747 @@
 
-<?php
-declare(strict_types=1);
-header('Content-Type: text/html; charset=utf-8');
-
-$brand = 'Buse Moda';
-$tagline = 'Günlük stilin en zarif hali';
-
-$categories = [
-    ['key'=>'all', 'title'=>'Tüm Ürünler'],
-    ['key'=>'ust', 'title'=>'Üst Giyim'],
-    ['key'=>'alt', 'title'=>'Alt Giyim'],
-    ['key'=>'elbise', 'title'=>'Elbiseler'],
-    ['key'=>'dis', 'title'=>'Dış Giyim'],
-    ['key'=>'aksesuar', 'title'=>'Aksesuar'],
-];
-
-$products = [
-    ['id'=>1, 'name'=>'Keten Karışımlı Bej Ceket', 'category'=>'dis', 'price'=>1899.90, 'oldPrice'=>2399.90, 'badge'=>'%21 İndirim', 'img'=>'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=900&q=85'],
-    ['id'=>2, 'name'=>'Zarif Ekru Gömlek', 'category'=>'ust', 'price'=>899.90, 'oldPrice'=>0, 'badge'=>'Yeni', 'img'=>'https://images.unsplash.com/photo-1598032895397-b9472444bf93?w=900&q=85'],
-    ['id'=>3, 'name'=>'Modern Kesim Siyah Elbise', 'category'=>'elbise', 'price'=>1699.90, 'oldPrice'=>2099.90, 'badge'=>'%19 İndirim', 'img'=>'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=900&q=85'],
-    ['id'=>4, 'name'=>'Yüksek Bel Bol Paça Pantolon', 'category'=>'alt', 'price'=>1099.90, 'oldPrice'=>0, 'badge'=>'Yeni', 'img'=>'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=900&q=85'],
-    ['id'=>5, 'name'=>'Günlük Örgü Triko', 'category'=>'ust', 'price'=>1199.90, 'oldPrice'=>1499.90, 'badge'=>'%20 İndirim', 'img'=>'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=900&q=85'],
-    ['id'=>6, 'name'=>'Minimal Omuz Çantası', 'category'=>'aksesuar', 'price'=>799.90, 'oldPrice'=>0, 'badge'=>'Yeni', 'img'=>'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=900&q=85'],
-    ['id'=>7, 'name'=>'Klasik Uzun Trençkot', 'category'=>'dis', 'price'=>2499.90, 'oldPrice'=>2899.90, 'badge'=>'%14 İndirim', 'img'=>'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=900&q=85'],
-    ['id'=>8, 'name'=>'Çiçek Desenli Yazlık Elbise', 'category'=>'elbise', 'price'=>1399.90, 'oldPrice'=>0, 'badge'=>'Yeni', 'img'=>'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=900&q=85'],
-];
-
-function e(string $text): string {
-    return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-}
-function lira(float $amount): string {
-    return number_format($amount, 2, ',', '.') . ' ₺';
-}
-?>
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fbf8f4">
-<meta name="description" content="<?= e($brand) ?> - Kadın giyim ve yeni sezon koleksiyonu.">
-<title><?= e($brand) ?> | Kadın Giyim</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Butik Zeynep - بوتيك زينب - معلومات النشاط التجاري وطرق التواصل">
+<title>بوتيك زينب | Butik Zeynep</title>
 
 <style>
 :root {
-    --ink:#322f2e;
-    --muted:#857e77;
-    --cream:#fbf8f4;
-    --blush:#f4e9e1;
-    --line:#eae4df;
-    --accent:#9b6f61;
-    --dark:#34302e;
+  --main: #a46b82;
+  --dark: #302830;
+  --gray: #817780;
+  --bg: #faf8f9;
+  --soft: #f8edf2;
+  --line: #ece4e9;
 }
-* {box-sizing:border-box}
-html {scroll-behavior:smooth}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-    margin:0;
-    background:#fff;
-    color:var(--ink);
-    font-family:'DM Sans',Arial,sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--dark);
+  font-family: Tahoma, Arial, sans-serif;
+  line-height: 1.8;
 }
-a {color:inherit;text-decoration:none}
-button,input,select {font:inherit}
-button {cursor:pointer}
-img {display:block;max-width:100%}
-.container {width:min(1320px,calc(100% - 48px));margin:auto}
-.announcement {
-    padding:11px;
-    text-align:center;
-    background:#302d2c;
-    color:white;
-    font-size:11px;
-    letter-spacing:1.3px;
+
+.container {
+  width: 92%;
+  max-width: 850px;
+  margin: auto;
 }
-.topbar {
-    background:var(--cream);
-    border-bottom:1px solid var(--line);
-    font-size:11px;
-    color:#766e67;
+
+a {
+  color: var(--main);
+  text-decoration: none;
 }
-.topbar .container {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:12px 0;
-}
-.topbar-links {display:flex;gap:24px}
+
 header {
-    position:sticky;
-    top:0;
-    z-index:40;
-    background:white;
-    box-shadow:0 2px 14px #00000008;
+  background: white;
+  border-bottom: 1px solid var(--line);
+  padding: 17px 0;
 }
-.main-header {
-    min-height:92px;
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
-    gap:20px;
-    align-items:center;
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
 }
-.brand {
-    font-family:'Playfair Display',serif;
-    font-size:42px;
-    font-weight:600;
-    letter-spacing:-2px;
-    white-space:nowrap;
+
+.logo {
+  color: var(--main);
+  font-size: 24px;
+  font-weight: bold;
 }
-.brand span {color:var(--accent);font-style:italic}
-.brand-sub {
-    text-align:center;
-    font-size:9px;
-    letter-spacing:4px;
-    color:var(--muted);
+
+.logo small {
+  display: block;
+  color: var(--gray);
+  font-size: 12px;
+  font-weight: normal;
+  direction: ltr;
+  text-align: right;
 }
-.search-bar {
-    width:240px;
-    display:flex;
-    border-bottom:1px solid #ccc;
-}
-.search-bar input {
-    width:100%;
-    border:0;
-    outline:0;
-    padding:12px 0;
-    font-size:12px;
-}
-.nav-tools {
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    gap:16px;
-}
-.ico-btn {
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    border:0;
-    background:none;
-    padding:7px;
-}
-.ico-btn svg {width:23px;height:23px}
-.counter {
-    position:absolute;
-    top:-2px;
-    right:-3px;
-    background:var(--accent);
-    color:white;
-    border-radius:50%;
-    min-width:17px;
-    height:17px;
-    font-size:10px;
-    display:grid;
-    place-items:center;
-}
-.desktop-nav {border-top:1px solid var(--line)}
-.nav-inner {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-wrap:wrap;
-    min-height:54px;
-    gap:31px;
-    font-size:12px;
-    font-weight:700;
-}
-.nav-inner a:hover {color:var(--accent)}
-.menu-button {display:none}
-.mobile-search {display:none;padding:10px 18px}
-.mobile-search.open {display:block}
-.mobile-search input {
-    width:100%;
-    padding:13px;
-    border:1px solid var(--line);
-}
+
 .hero {
-    min-height:520px;
-    display:grid;
-    grid-template-columns:43% 57%;
-    background:var(--cream);
+  background: white;
+  padding: 55px 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
 }
-.hero-copy {
-    padding:65px max(35px,calc((100vw - 1320px)/2));
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:flex-start;
+
+.symbol {
+  width: 70px;
+  height: 70px;
+  background: var(--soft);
+  color: var(--main);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0 auto 20px;
 }
-.eyebrow {
-    color:var(--accent);
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:3px;
-}
+
 .hero h1 {
-    font-family:'Playfair Display',serif;
-    font-weight:500;
-    font-size:clamp(45px,5vw,78px);
-    line-height:1.12;
-    margin:19px 0;
-    letter-spacing:-2px;
+  margin: 0;
+  font-size: clamp(30px, 6vw, 46px);
 }
+
+.turkish {
+  color: var(--main);
+  font-weight: bold;
+  direction: ltr;
+}
+
+.hero .turkish {
+  font-size: clamp(22px, 4vw, 29px);
+  margin-top: 5px;
+}
+
+.subtitle {
+  color: var(--gray);
+  font-size: 18px;
+  margin-top: 10px;
+}
+
 .hero p {
-    color:#807970;
-    font-size:14px;
-    line-height:1.9;
-    margin-bottom:32px;
+  color: var(--gray);
+  font-size: 15px;
+  max-width: 540px;
+  margin: 22px auto;
 }
-.btn {
-    display:inline-block;
-    border:1px solid var(--dark);
-    padding:16px 27px;
-    background:var(--dark);
-    color:white;
-    font-weight:700;
-    font-size:11px;
-    letter-spacing:1px;
-    text-align:center;
-    transition:.2s;
+
+.tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 24px;
 }
-.btn:hover {background:var(--accent);border-color:var(--accent)}
-.hero-image {
-    background:#d8c6b6 url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=90') center/cover no-repeat;
-    position:relative;
+
+.tags span {
+  background: var(--soft);
+  color: var(--main);
+  border-radius: 25px;
+  padding: 7px 16px;
+  font-size: 13px;
 }
-.hero-image span {
-    position:absolute;
-    bottom:25px;
-    right:30px;
-    color:#fff;
-    font-size:11px;
-    letter-spacing:2px;
-    text-shadow:0 2px 6px #0008;
+
+main {
+  padding: 30px 0;
 }
-.benefits {
-    border-bottom:1px solid var(--line);
+
+.card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
 }
-.benefits .container {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+.card h2 {
+  margin: 0;
+  padding: 14px 20px;
+  background: var(--soft);
+  border-right: 4px solid var(--main);
+  font-size: 19px;
 }
-.benefit {
-    text-align:center;
-    padding:27px 15px;
-    border-right:1px solid var(--line);
+
+.content {
+  padding: 10px 20px;
 }
-.benefit:last-child {border:0}
-.benefit b {display:block;font-size:12px}
-.benefit small {font-size:11px;color:var(--muted)}
-section {padding:78px 0}
-.section-header {text-align:center;margin-bottom:39px}
-.section-kicker {
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:3px;
-    color:var(--accent);
+
+.names {
+  padding: 30px 15px;
+  text-align: center;
 }
-.section-header h2 {
-    font-family:'Playfair Display',serif;
-    font-weight:500;
-    font-size:clamp(32px,4vw,45px);
-    margin:13px 0;
+
+.name1 {
+  font-size: 36px;
+  font-weight: bold;
 }
-.section-header p {font-size:13px;color:var(--muted)}
-.category-grid {
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:17px;
+
+.name2 {
+  color: var(--main);
+  font-size: 29px;
+  font-weight: bold;
+  direction: ltr;
 }
-.category-card {
-    position:relative;
-    height:340px;
-    overflow:hidden;
-    background:#e8e0d9;
+
+.name3 {
+  font-size: 23px;
+  margin-top: 15px;
 }
-.category-card img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:transform .4s;
+
+.name4 {
+  font-size: 18px;
+  color: var(--gray);
+  margin-top: 10px;
 }
-.category-card:hover img {transform:scale(1.06)}
-.category-card:after {
-    content:"";
-    position:absolute;
-    inset:50% 0 0;
-    background:linear-gradient(transparent,#0009);
+
+.name5 {
+  font-size: 17px;
+  color: var(--main);
+  font-weight: bold;
+  letter-spacing: 2px;
+  direction: ltr;
+  margin-top: 12px;
 }
-.cat-label {
-    position:absolute;
-    bottom:25px;
-    left:22px;
-    right:20px;
-    z-index:2;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    color:#fff;
+
+.divider {
+  width: 60px;
+  height: 2px;
+  background: var(--main);
+  margin: 22px auto;
 }
-.cat-label strong {
-    font-family:'Playfair Display',serif;
-    font-size:24px;
-    font-weight:500;
+
+.name-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 27px;
 }
-.cat-label span {font-size:10px}
-.products-section {background:#fdfbf9}
-.filter-row {
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:30px;
+
+.name-grid div {
+  background: var(--soft);
+  color: var(--main);
+  padding: 15px;
+  border-radius: 9px;
+  font-weight: bold;
+  font-size: 15px;
 }
-.filter-btn {
-    padding:11px 16px;
-    background:transparent;
-    border:1px solid #dfd5cd;
-    color:#6e6761;
-    font-size:11px;
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
 }
-.filter-btn.active,.filter-btn:hover {
-    background:var(--dark);
-    border-color:var(--dark);
-    color:#fff;
+
+.row:last-child {
+  border-bottom: none;
 }
-.shop-toolbar {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    margin-bottom:23px;
-    color:var(--muted);
-    font-size:12px;
+
+.label {
+  color: var(--gray);
+  font-size: 14px;
 }
-.shop-toolbar select {
-    padding:10px;
-    border:1px solid var(--line);
-    background:white;
-    outline:0;
+
+.value {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  overflow-wrap: anywhere;
 }
-.product-grid {
-    display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:32px 18px;
+
+.status {
+  color: #248056;
 }
-.product-card {min-width:0}
-.product-photo {
-    position:relative;
-    aspect-ratio:3/3.8;
-    background:#e9e1db;
-    overflow:hidden;
+
+.contact {
+  background: var(--main);
+  border-radius: 12px;
+  padding: 38px 20px;
+  color: white;
+  text-align: center;
 }
-.product-photo img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:.4s;
+
+.contact h2 {
+  margin: 0;
+  font-size: 24px;
 }
-.product-card:hover .product-photo img {transform:scale(1.055)}
-.prod-badge {
-    position:absolute;
-    top:13px;
-    left:13px;
-    background:white;
-    padding:8px 10px;
-    font-size:10px;
-    z-index:2;
+
+.contact .turkish {
+  color: white;
+  font-size: 19px;
 }
-.fav {
-    position:absolute;
-    z-index:2;
-    top:10px;
-    right:10px;
-    width:38px;
-    height:38px;
-    border:0;
-    border-radius:50%;
-    background:white;
-    font-size:20px;
+
+.contact p {
+  font-size: 14px;
+  margin: 20px 0;
 }
-.fav.is-active {color:#c54b64}
-.add-btn {
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:46px;
-    border:0;
-    background:#fffffff0;
-    font-size:11px;
-    font-weight:700;
-    transform:translateY(100%);
-    transition:.2s;
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
-.product-card:hover .add-btn,
-.add-btn:focus-visible {transform:translateY(0)}
-.product-info {text-align:center;padding:16px 4px}
-.product-info .collection {
-    font-size:10px;
-    color:var(--accent);
-    letter-spacing:2px;
+
+.buttons a {
+  background: white;
+  color: var(--main);
+  padding: 10px 20px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: bold;
 }
-.product-info h3 {
-    font-size:13px;
-    font-weight:500;
-    line-height:1.6;
-    min-height:42px;
+
+.note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--gray);
+  padding: 20px;
 }
-.price {font-weight:700;font-size:13px}
-.old {
-    color:#aaa;
-    margin-left:8px;
-    font-size:11px;
-    font-weight:400;
-    text-decoration:line-through;
+
+footer {
+  background: white;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  padding: 30px 15px;
 }
-.empty {text-align:center;padding:50px;color:var(--muted);display:none}
-.editorial {
-    padding:0;
-    display:grid;
-    grid-template-columns:55% 45%;
-    background:#f0e7df;
-    min-height:480px;
+
+footer .arabic {
+  font-size: 25px;
+  font-weight: bold;
 }
-.editorial-photo {
-    background:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=85') center/cover;
+
+footer .turkish {
+  font-size: 21px;
 }
-.editorial-content {
-    padding:65px 9vw;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    justify-content:center;
+
+footer .small {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 14px;
 }
-.editorial h2 {
-    font-family:'Playfair Display',serif;
-    font-size:clamp(37px,4vw,65px);
-    font-weight:500;
-    line-height:1.15;
-    margin:18px 0;
-}
-.editorial p {font-size:13px;line-height:1.9;color:#756e67}
-.newsletter {
-    background:#36312f;
-    color:white;
-    text-align:center;
-}
-.newsletter h2 {
-    font-family:'Playfair Display',serif;
-    font-weight:500;
-    font-size:38px;
-}
-.newsletter p {color:#d2c5bd;font-size:13px}
-.footer-main {background:#faf7f4;padding:65px 0}
-.footer-cols {
-    display:grid;
-    grid-template-columns:2fr 1fr 1fr 1.3fr;
-    gap:38px;
-}
-.footer-brand {
-    font-family:'Playfair Display',serif;
-    font-size:32px;
-}
-.footer-brand span {color:var(--accent);font-style:italic}
-.footer-description {
-    color:var(--muted);
-    font-size:12px;
-    line-height:1.9;
-}
-.footer-title {
-    font-size:12px;
-    letter-spacing:1px;
-    margin-bottom:20px;
-}
-.footer-links {display:flex;flex-direction:column;gap:15px;font-size:12px;color:#81776f}
-.footer-bottom {
-    border-top:1px solid var(--line);
-    background:#faf7f4;
-    padding:21px 0;
-    text-align:center;
-    font-size:11px;
-    color:var(--muted);
-}
-.overlay {
-    position:fixed;
-    inset:0;
-    z-index:80;
-    background:#0006;
-    opacity:0;
-    visibility:hidden;
-    transition:.2s;
-}
-.overlay.visible {opacity:1;visibility:visible}
-.drawer {
-    position:fixed;
-    top:0;
-    right:0;
-    bottom:0;
-    width:min(430px,100%);
-    background:white;
-    z-index:90;
-    transform:translateX(102%);
-    transition:.25s;
-    display:flex;
-    flex-direction:column;
-}
-.drawer.open {transform:translateX(0)}
-.drawer-header {
-    padding:22px 25px;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-.drawer-header h3 {
-    margin:0;
-    font-family:'Playfair Display',serif;
-    font-size:27px;
-}
-.drawer-body {padding:20px 25px;flex:1;overflow:auto}
-.drawer-item {
-    display:flex;
-    gap:15px;
-    padding:16px 0;
-    border-bottom:1px solid var(--line);
-}
-.drawer-item img {width:80px;height:105px;object-fit:cover}
-.drawer-item h4 {margin:3px 0 9px;font-size:13px;font-weight:500}
-.qty-controls {display:flex;align-items:center;gap:9px;margin-top:12px}
-.qty-controls button {border:1px solid var(--line);background:white;padding:5px 10px}
-.drawer-footer {padding:23px;border-top:1px solid var(--line)}
-.drawer-total {display:flex;justify-content:space-between;margin-bottom:20px}
-.drawer-footer .btn {width:100%}
-.drawer-hint {font-size:11px;color:var(--muted);text-align:center}
-.mobile-menu {
-    position:fixed;
-    top:0;
-    bottom:0;
-    left:0;
-    width:min(340px,85vw);
-    z-index:95;
-    background:white;
-    padding:22px;
-    transform:translateX(-103%);
-    transition:.25s;
-}
-.mobile-menu.open {transform:translateX(0)}
-.mobile-menu a {display:block;padding:15px 0;border-bottom:1px solid var(--line)}
-.toast {
-    position:fixed;
-    z-index:100;
-    bottom:25px;
-    left:50%;
-    transform:translate(-50%,15px);
-    background:#34302e;
-    color:white;
-    padding:14px 23px;
-    font-size:12px;
-    opacity:0;
-    visibility:hidden;
-    transition:.2s;
-}
-.toast.on {opacity:1;visibility:visible;transform:translate(-50%,0)}
-@media(max-width:1050px) {
-    .nav-inner {gap:17px}
-    .category-card {height:280px}
-    .footer-cols {gap:20px}
-}
-@media(max-width:780px) {
-    .topbar,.desktop-nav,.search-bar {display:none}
-    .main-header {min-height:75px;grid-template-columns:1fr auto 1fr}
-    .menu-button {display:inline-flex;justify-self:start}
-    .brand {font-size:31px}
-    .brand-sub {font-size:7px}
-    .nav-tools {gap:4px}
-    .hero {grid-template-columns:1fr}
-    .hero-image {height:380px;grid-row:1}
-    .hero-copy {padding:45px 28px;align-items:center;text-align:center}
-    .hero h1 {font-size:45px}
-    .benefits .container {grid-template-columns:repeat(2,1fr)}
-    .benefit:last-child {display:none}
-    section {padding:55px 0}
-    .category-grid {grid-template-columns:repeat(2,1fr);gap:10px}
-    .category-card {height:280px}
-    .product-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 11px}
-    .add-btn {transform:none;height:38px}
-    .editorial {grid-template-columns:1fr}
-    .editorial-photo {height:330px}
-    .editorial-content {align-items:center;text-align:center;padding:48px 25px}
-    .footer-cols {grid-template-columns:repeat(2,1fr);gap:30px}
-    .footer-cols>div:first-child {grid-column:1/-1}
-}
-@media(max-width:440px) {
-    .container {width:calc(100% - 26px)}
-    .brand {font-size:27px}
-    .hero-image {height:310px}
-    .hero h1 {font-size:40px}
-    .category-card {height:235px}
-    .cat-label {left:12px;right:10px;bottom:15px}
-    .cat-label strong {font-size:19px}
-    .filter-row {gap:7px}
-    .filter-btn {padding:9px;font-size:10px}
-    .prod-badge {left:7px;top:7px;padding:6px;font-size:9px}
-    .product-info h3 {font-size:12px}
+
+@media(max-width:600px) {
+  .hero {
+    padding: 42px 15px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .value {
+    text-align: right;
+  }
+
+  .name-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .name1 {
+    font-size: 29px;
+  }
+
+  .name2 {
+    font-size: 23px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons a {
+    display: block;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<div class="announcement">YENİ SEZON KOLEKSİYONU • STİLİNİ KEŞFET</div>
-
-<div class="topbar">
-  <div class="container">
-    <span>Şıklık, sadelik ve ilham bir arada.</span>
-    <div class="topbar-links">
-      <a href="#koleksiyon">Koleksiyon</a>
-      <a href="#hakkimizda">Hakkımızda</a>
-      <a href="#iletisim">İletişim</a>
-    </div>
-  </div>
-</div>
+<!-- HEADER -->
 
 <header>
-  <div class="container main-header">
-    <button class="ico-btn menu-button" id="menuOpen" aria-label="Menü">☰</button>
-
-    <label class="search-bar">
-      <input id="siteSearch" type="search" placeholder="Ürün ara...">
-      <span>⌕</span>
-    </label>
-
-    <a href="#anasayfa">
-      <div class="brand">Buse <span>Moda</span></div>
-      <div class="brand-sub">KADIN GİYİM</div>
-    </a>
-
-    <div class="nav-tools">
-      <button class="ico-btn" id="searchToggle" aria-label="Arama">⌕</button>
-      <button class="ico-btn" id="favoritesButton" aria-label="Favoriler">
-        ♡ <span class="counter" id="favoritesCount" hidden>0</span>
-      </button>
-      <button class="ico-btn" id="cartOpen" aria-label="Sepet">
-        🛍 <span class="counter" id="cartCount">0</span>
-      </button>
+  <div class="container header-content">
+    <div class="logo">
+      بوتيك زينب
+      <small>Butik Zeynep</small>
     </div>
-  </div>
 
-  <div class="mobile-search" id="mobileSearchWrap">
-    <input id="mobileSearch" type="search" placeholder="Ürün ara...">
+    <a href="#contact">تواصل معنا</a>
   </div>
-
-  <nav class="desktop-nav">
-    <div class="container nav-inner">
-      <a href="#anasayfa">ANASAYFA</a>
-      <a href="#koleksiyon">YENİ GELENLER</a>
-      <a href="#koleksiyon" data-go="ust">ÜST GİYİM</a>
-      <a href="#koleksiyon" data-go="alt">ALT GİYİM</a>
-      <a href="#koleksiyon" data-go="elbise">ELBİSE</a>
-      <a href="#koleksiyon" data-go="dis">DIŞ GİYİM</a>
-      <a href="#koleksiyon" data-go="aksesuar">AKSESUAR</a>
-    </div>
-  </nav>
 </header>
 
-<main id="anasayfa">
+<!-- MAIN BANNER -->
 
-<div class="hero">
-  <div class="hero-copy">
-    <span class="eyebrow">YENİ SEZON / 2026</span>
-    <h1>Tarzın<br>senin imzan.</h1>
-    <p>Modern dokunuşlarla hazırlanan koleksiyonumuzda, her güne eşlik eden zamansız parçaları keşfet.</p>
-    <a class="btn" href="#koleksiyon">KOLEKSİYONU KEŞFET →</a>
+<section class="hero">
+
+  <div class="symbol">Z</div>
+
+  <h1>بوتيك زينب</h1>
+
+  <div class="turkish">
+    Butik Zeynep
   </div>
-  <div class="hero-image">
-    <span>BUSE MODA / YENİ SEZON</span>
+
+  <div class="subtitle">
+    زينب للأزياء والموضة
   </div>
+
+  <p>
+    مرحبًا بكم في بوتيك زينب.
+    نهتم بالأناقة والموضة والتفاصيل العصرية
+    التي تضيف لمسة مميزة إلى إطلالتكم.
+    تعرفوا على معلومات النشاط وطرق التواصل.
+  </p>
+
+  <div class="tags">
+    <span>بوتيك زينب</span>
+    <span>Butik Zeynep</span>
+    <span>زينب للأزياء</span>
+    <span>ZEYNEP</span>
+    <span>Zeynep Butik</span>
+  </div>
+
+</section>
+
+<main class="container">
+
+<!-- COMPANY NAMES -->
+
+<section class="card">
+
+  <h2>اسم الشركة بالعربية والتركية</h2>
+
+  <div class="names">
+
+    <div class="name1">
+      بوتيك زينب
+    </div>
+
+    <div class="name2">
+      Butik Zeynep
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="name3">
+      زينب للأزياء
+    </div>
+
+    <div class="name4">
+      متجر زينب للملابس
+    </div>
+
+    <div class="name4">
+      زينب للموضة والأناقة
+    </div>
+
+    <div class="name5">
+      BUTİK ZEYNEP
+    </div>
+
+    <div class="name4">
+      زينب | Zeynep
+    </div>
+
+    <div class="name4">
+      بيت أزياء زينب
+    </div>
+
+    <div class="name4" dir="ltr">
+      Zeynep Fashion Boutique
+    </div>
+
+    <div class="name-grid">
+      <div>بوتيك زينب</div>
+      <div dir="ltr">BUTİK ZEYNEP</div>
+
+      <div>زينب للأزياء</div>
+      <div dir="ltr">Zeynep Butik</div>
+
+      <div>عالم زينب للأزياء</div>
+      <div dir="ltr">Butik Zeynep</div>
+    </div>
+
+    <p style="font-size:12px;color:#817780;margin-top:20px;">
+      الاسم الوارد في المستند هو Butik Zeynep.
+      الأسماء العربية والبديلة صيغ عرض وتسويق،
+      وليست أسماء قانونية مسجلة بصورة مستقلة.
+    </p>
+
+  </div>
+</section>
+
+<!-- COMPANY INFORMATION -->
+
+<section class="card">
+
+  <h2>معلومات الشركة</h2>
+
+  <div class="content">
+
+    <div class="row">
+      <span class="label">الاسم التجاري في المستند</span>
+      <span class="value" dir="ltr">
+        Butik Zeynep
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">الاسم بالعربية للعرض</span>
+      <span class="value">
+        بوتيك زينب
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">رقم السجل التجاري المذكور</span>
+      <span class="value">
+        1656606507
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">الشكل القانوني المذكور</span>
+      <span class="value">
+        من الشركات الكبرى
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">حالة السجل في المستند</span>
+      <span class="value status">
+        نشط - Active
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">تاريخ التسجيل</span>
+      <span class="value">
+        2022/02/12
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">استثمار أجنبي</span>
+      <span class="value">
+        نعم - Yes
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">تاريخ انتهاء السجل</span>
+      <span class="value">
+        11/12/2028
+      </span>
+    </div>
+
+  </div>
+</section>
+
+<!-- LICENSE INFORMATION -->
+
+<section class="card">
+
+  <h2>معلومات النشاط والترخيص</h2>
+
+  <div class="content">
+
+    <div class="row">
+      <span class="label">رقم الترخيص</span>
+      <span class="value">
+        L466065430
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">تعريف الترخيص</span>
+      <span class="value">
+        LD-1673
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">النشاط المذكور في المستند</span>
+      <span class="value">
+        خدمات الترويج والتسويق
+        على المواقع الإلكترونية
+        ووسائل التواصل الاجتماعي
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">مدة الترخيص</span>
+      <span class="value">
+        12 شهرًا
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">الإصدار الأول</span>
+      <span class="value">
+        25/02/2024
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">تاريخ الإصدار</span>
+      <span class="value">
+        2022/08/20
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">انتهاء الترخيص</span>
+      <span class="value">
+        12/12/2028
+      </span>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT INFORMATION -->
+
+<section class="card">
+
+  <h2>معلومات التواصل</h2>
+
+  <div class="content">
+
+    <div class="row">
+      <span class="label">رقم الهاتف</span>
+      <span class="value">
+        <a href="tel:+966571452112">
+          +966571452112
+        </a>
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">البريد الإلكتروني</span>
+      <span class="value">
+        <a href="mailto:admin@butikzeynep.com.tr">
+          admin@butikzeynep.com.tr
+        </a>
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">البريد الإضافي في المستند</span>
+      <span class="value">
+        <a href="mailto:a@butikzeynep.com.tr">
+          a@butikzeynep.com.tr
+        </a>
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">الموقع الإلكتروني</span>
+      <span class="value">
+        <a href="https://www.butikzeynep.com.tr"
+           target="_blank"
+           rel="noopener noreferrer">
+          butikzeynep.com.tr
+        </a>
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">العنوان</span>
+      <span class="value" dir="ltr">
+        Ayşe Çavuş Cad. NO:30/2,
+        Suadiye, İstanbul,
+        34740, Türkiye
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="label">المدينة</span>
+      <span class="value">إسطنبول - İstanbul</span>
+    </div>
+
+    <div class="row">
+      <span class="label">الرمز البريدي</span>
+      <span class="value">34740</span>
+    </div>
+
+    <div class="row">
+      <span class="label">الدولة</span>
+      <span class="value">تركيا - Türkiye</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+
+<section class="contact" id="contact">
+
+  <h2>تواصل مع بوتيك زينب</h2>
+
+  <div class="turkish">
+    Butik Zeynep
+  </div>
+
+  <p>
+    يسعدنا استقبال استفساراتكم
+    والتواصل معكم.
+  </p>
+
+  <div class="buttons">
+
+    <a href="tel:+966571452112">
+      اتصال هاتفي
+    </a>
+
+    <a href="mailto:admin@butikzeynep.com.tr">
+      البريد الإلكتروني
+    </a>
+
+    <a href="https://www.butikzeynep.com.tr"
+       target="_blank"
+       rel="noopener noreferrer">
+      زيارة الموقع
+    </a>
+
+  </div>
+
+</section>
+
+<div class="note">
+  هذه صفحة تعريفية تعرض معلومات
+  واردة في المستند المرفق دون تحقق مستقل.
+  لا تمثل شهادة حكومية أو وسيلة رسمية
+  للتحقق من صحة التسجيل أو الترخيص.
 </div>
-
-<div class="benefits">
-  <div class="container">
-    <div class="benefit">
-      <b>MODERN ALIŞVERİŞ</b>
-      <small>Kolay ve hızlı keşif</small>
-    </div>
-    <div class="benefit">
-      <b>YENİ SEZON</b>
-      <small>Özenle seçilen modeller</small>
-    </div>
-    <div class="benefit">
-      <b>HER GÜNE YENİ STİL</b>
-      <small>Gardırobuna ilham ver</small>
-    </div>
-  </div>
-</div>
-
-<section>
-  <div class="container">
-    <div class="section-header">
-      <div class="section-kicker">STİLİNİ KEŞFET</div>
-      <h2>Kategoriler</h2>
-      <p>Sevdiğin parçalarla kendine özgü kombinler oluştur.</p>
-    </div>
-
-    <div class="category-grid">
-      <a href="#koleksiyon" class="category-card" data-go="ust">
-        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=700&q=80" alt="Üst Giyim" loading="lazy">
-        <div class="cat-label"><strong>Üst Giyim</strong><span>İNCELE →</span></div>
-      </a>
-      <a href="#koleksiyon" class="category-card" data-go="elbise">
-        <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=700&q=80" alt="Elbiseler" loading="lazy">
-        <div class="cat-label"><strong>Elbiseler</strong><span>İNCELE →</span></div>
-      </a>
-      <a href="#koleksiyon" class="category-card" data-go="dis">
-        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=700&q=80" alt="Dış Giyim" loading="lazy">
-        <div class="cat-label"><strong>Dış Giyim</strong><span>İNCELE →</span></div>
-      </a>
-      <a href="#koleksiyon" class="category-card" data-go="aksesuar">
-        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=700&q=80" alt="Aksesuar" loading="lazy">
-        <div class="cat-label"><strong>Aksesuar</strong><span>İNCELE →</span></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="products-section" id="koleksiyon">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-kicker">ÖZENLE SEÇİLDİ</div>
-      <h2>Sizin İçin Seçtiklerimiz</h2>
-      <p>Her detayda zarafeti hisset.</p>
-    </div>
-
-    <div class="filter-row">
-      <?php foreach($categories as $i=>$cat): ?>
-        <button type="button"
-                class="filter-btn<?= $i===0?' active':'' ?>"
-                data-filter="<?= e($cat['key']) ?>">
-          <?= e($cat['title']) ?>
-        </button>
-      <?php endforeach; ?>
-    </div>
-
-    <div class="shop-toolbar">
-      <span id="resultCount">8 ürün listeleniyor</span>
-      <label>
-        Sırala:
-        <select id="sortProducts">
-          <option value="default">Önerilen</option>
-          <option value="price-asc">Fiyat: Artan</option>
-          <option value="price-desc">Fiyat: Azalan</option>
-          <option value="name">Ürün Adı</option>
-        </select>
-      </label>
-    </div>
-
-    <div class="product-grid" id="productGrid">
-      <?php foreach($products as $product): ?>
-        <article class="product-card"
-                 data-id="<?= $product['id'] ?>"
-                 data-category="<?= e($product['category']) ?>"
-                 data-name="<?= e($product['name']) ?>">
-
-          <div class="product-photo">
-            <span class="prod-badge"><?= e($product['badge']) ?></span>
-            <img src="<?= e($product['img']) ?>"
-                 alt="<?= e($product['name']) ?>"
-                 loading="lazy">
-
-            <button class="fav"
-                    data-fav="<?= $product['id'] ?>"
-                    type="button">♡</button>
-
-            <button class="add-btn"
-                    data-add="<?= $product['id'] ?>"
-                    type="button">SEPETE EKLE +</button>
-          </div>
-
-          <div class="product-info">
-            <span class="collection">BUSE MODA</span>
-            <h3><?= e($product['name']) ?></h3>
-            <div class="price">
-              <?= lira($product['price']) ?>
-              <?php if($product['oldPrice']>0): ?>
-                <span class="old"><?= lira($product['oldPrice']) ?></span>
-              <?php endif; ?>
-            </div>
-          </div>
-        </article>
-      <?php endforeach; ?>
-    </div>
-
-    <div class="empty" id="emptyState">
-      Aramanızla eşleşen ürün bulunamadı.
-    </div>
-  </div>
-</section>
-
-<section class="editorial" id="hakkimizda">
-  <div class="editorial-photo"></div>
-  <div class="editorial-content">
-    <span class="eyebrow">BUSE MODA STİL REHBERİ</span>
-    <h2>Her gün biraz daha sen.</h2>
-    <p>Rahat, yalın ve güçlü çizgilerle stilini özgürce yansıt. Sezonun ilham veren parçalarını keşfet.</p>
-    <a href="#koleksiyon" class="btn">ALIŞVERİŞE BAŞLA →</a>
-  </div>
-</section>
-
-<section class="newsletter" id="iletisim">
-  <div class="container">
-    <div class="section-kicker">SENİN STİLİN, SENİN HİKAYEN</div>
-    <h2>Yeni sezona birlikte.</h2>
-    <p>Moda dünyasındaki yenilikleri koleksiyonumuzda keşfet.</p>
-    <a href="#koleksiyon" class="btn">ÜRÜNLERE GÖZ AT</a>
-  </div>
-</section>
 
 </main>
 
+<!-- FOOTER -->
+
 <footer>
-  <div class="footer-main">
-    <div class="container footer-cols">
-      <div>
-        <div class="footer-brand">Buse <span>Moda</span></div>
-        <p class="footer-description"><?= e($tagline) ?>. Kendi stilini yansıtan parçalarla gardırobuna yeni bir soluk getir.</p>
-      </div>
-      <div>
-        <h3 class="footer-title">KATEGORİLER</h3>
-        <div class="footer-links">
-          <a href="#koleksiyon" data-go="ust">Üst Giyim</a>
-          <a href="#koleksiyon" data-go="elbise">Elbiseler</a>
-          <a href="#koleksiyon" data-go="dis">Dış Giyim</a>
-          <a href="#koleksiyon" data-go="aksesuar">Aksesuar</a>
-        </div>
-      </div>
-      <div>
-        <h3 class="footer-title">KURUMSAL</h3>
-        <div class="footer-links">
-          <a href="#hakkimizda">Hakkımızda</a>
-          <a href="#iletisim">İletişim</a>
-          <a href="#koleksiyon">Yeni Gelenler</a>
-        </div>
-      </div>
-      <div>
-        <h3 class="footer-title">BİLGİLENDİRME</h3>
-        <p class="footer-description">Bu site örnek bir vitrin tasarımıdır. Gerçek ödeme ve sipariş işlemleri için ek altyapı gerekir.</p>
-      </div>
-    </div>
+
+  <div class="arabic">
+    بوتيك زينب
   </div>
-  <div class="footer-bottom">
-    © <?= date('Y') ?> <?= e($brand) ?>. Tüm hakları saklıdır.
+
+  <div class="turkish">
+    Butik Zeynep
   </div>
+
+  <div class="small">
+    زينب للأزياء
+    <br>
+    BUTİK ZEYNEP
+    <br>
+    © 2026 Butik Zeynep
+    <br>
+    butikzeynep.com.tr
+    <br>
+    Suadiye, İstanbul 34740, Türkiye
+  </div>
+
 </footer>
 
-<div class="overlay" id="overlay"></div>
-
-<aside class="drawer" id="cartDrawer" aria-hidden="true">
-  <div class="drawer-header">
-    <h3>Sepetim</h3>
-    <button class="ico-btn" id="cartClose" aria-label="Kapat">✕</button>
-  </div>
-  <div class="drawer-body" id="cartItems"></div>
-  <div class="drawer-footer">
-    <div class="drawer-total">
-      <span>Toplam</span>
-      <strong id="cartTotal">0,00 ₺</strong>
-    </div>
-    <button class="btn" id="checkoutButton">ALIŞVERİŞ SEPETİM</button>
-    <p class="drawer-hint">Demo: Gerçek ödeme sistemi bağlı değildir.</p>
-  </div>
-</aside>
-
-<aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <div class="drawer-header">
-    <h3>Buse Moda</h3>
-    <button class="ico-btn" id="menuClose">✕</button>
-  </div>
-  <a href="#anasayfa">Anasayfa</a>
-  <?php foreach($categories as $cat): ?>
-    <a href="#koleksiyon" data-go="<?= e($cat['key']) ?>">
-      <?= e($cat['title']) ?>
-    </a>
-  <?php endforeach; ?>
-  <a href="#hakkimizda">Hakkımızda</a>
-</aside>
-
-<div class="toast" id="toast" role="status"></div>
-
-<script>
-(() => {
-  'use strict';
-
-  const products = <?= json_encode(
-      $products,
-      JSON_UNESCAPED_UNICODE |
-      JSON_UNESCAPED_SLASHES |
-      JSON_HEX_TAG |
-      JSON_HEX_AMP |
-      JSON_HEX_APOS |
-      JSON_HEX_QUOT
-  ) ?>;
-
-  const byId = Object.fromEntries(products.map(p => [p.id,p]));
-  const $ = s => document.querySelector(s);
-  const $$ = s => [...document.querySelectorAll(s)];
-  const money = n => new Intl.NumberFormat('tr-TR',{
-      style:'currency',
-      currency:'TRY'
-  }).format(n);
-
-  function load(key,fallback) {
-    try {
-      return JSON.parse(localStorage.getItem(key)) ?? fallback;
-    } catch {
-      return fallback;
-    }
-  }
-
-  let cart = load('buse-cart',{});
-  let favorites = load('buse-favorites',[]);
-  let activeFilter = 'all';
-  let onlyFavorites = false;
-  let search = '';
-
-  function save() {
-    try {
-      localStorage.setItem('buse-cart',JSON.stringify(cart));
-      localStorage.setItem('buse-favorites',JSON.stringify(favorites));
-    } catch {}
-  }
-
-  let toastTimer;
-
-  function toast(message) {
-    const node = $('#toast');
-    node.textContent = message;
-    node.classList.add('on');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => node.classList.remove('on'),2500);
-  }
-
-  function renderProducts() {
-    const cards = $$('.product-card');
-    let visible = [];
-
-    for(const card of cards) {
-      const id = Number(card.dataset.id);
-      const categoryMatch = activeFilter === 'all' ||
-                            card.dataset.category === activeFilter;
-      const favoriteMatch = !onlyFavorites || favorites.includes(id);
-      const nameMatch = !search ||
-        card.dataset.name.toLocaleLowerCase('tr-TR').includes(search);
-
-      const show = categoryMatch && favoriteMatch && nameMatch;
-      card.style.display = show ? '' : 'none';
-      if(show) visible.push(card);
-    }
-
-    const sort = $('#sortProducts').value;
-
-    if(sort !== 'default') {
-      visible.sort((a,b) => {
-        const x = byId[Number(a.dataset.id)];
-        const y = byId[Number(b.dataset.id)];
-        if(sort === 'price-asc') return x.price - y.price;
-        if(sort === 'price-desc') return y.price - x.price;
-        return x.name.localeCompare(y.name,'tr');
-      });
-      visible.forEach(card => $('#productGrid').appendChild(card));
-    } else {
-      cards.sort((a,b) =>
-        Number(a.dataset.id) - Number(b.dataset.id)
-      ).forEach(card => $('#productGrid').appendChild(card));
-    }
-
-    $('#resultCount').textContent = visible.length + ' ürün listeleniyor';
-    $('#emptyState').style.display = visible.length ? 'none' : 'block';
-
-    $$('.fav').forEach(button => {
-      const active = favorites.includes(Number(button.dataset.fav));
-      button.classList.toggle('is-active',active);
-      button.textContent = active ? '♥' : '♡';
-    });
-
-    $('#favoritesCount').textContent = favorites.length;
-    $('#favoritesCount').hidden = !favorites.length;
-
-    $$('.filter-btn').forEach(button =>
-      button.classList.toggle('active',button.dataset.filter === activeFilter)
-    );
-  }
-
-  function renderCart() {
-    let total = 0;
-    let count = 0;
-    let html = '';
-
-    for(const [id,value] of Object.entries(cart)) {
-      const p = byId[Number(id)];
-      const qty = Number(value);
-      if(!p || qty < 1) continue;
-
-      count += qty;
-      total += p.price * qty;
-
-      html += `
-      <div class="drawer-item">
-        <img src="${p.img}" alt="">
-        <div style="flex:1">
-          <h4>${p.name}</h4>
-          <strong>${money(p.price)}</strong>
-          <div class="qty-controls">
-            <button data-qty="${p.id}" data-step="-1">−</button>
-            <span>${qty}</span>
-            <button data-qty="${p.id}" data-step="1">+</button>
-            <button data-remove="${p.id}">Sil</button>
-          </div>
-        </div>
-      </div>`;
-    }
-
-    $('#cartItems').innerHTML = html ||
-      '<p style="text-align:center;color:#888;margin-top:50px">Sepetiniz henüz boş.</p>';
-
-    $('#cartTotal').textContent = money(total);
-    $('#cartCount').textContent = count;
-    save();
-  }
-
-  function updateOverlay() {
-    const opened = $('#cartDrawer').classList.contains('open') ||
-                   $('#mobileMenu').classList.contains('open');
-
-    $('#overlay').classList.toggle('visible',opened);
-    document.body.style.overflow = opened ? 'hidden' : '';
-  }
-
-  function closeCart() {
-    $('#cartDrawer').classList.remove('open');
-    $('#cartDrawer').setAttribute('aria-hidden','true');
-    updateOverlay();
-  }
-
-  function closeMenu() {
-    $('#mobileMenu').classList.remove('open');
-    $('#mobileMenu').setAttribute('aria-hidden','true');
-    updateOverlay();
-  }
-
-  function openCart() {
-    closeMenu();
-    $('#cartDrawer').classList.add('open');
-    $('#cartDrawer').setAttribute('aria-hidden','false');
-    updateOverlay();
-  }
-
-  function openMenu() {
-    closeCart();
-    $('#mobileMenu').classList.add('open');
-    $('#mobileMenu').setAttribute('aria-hidden','false');
-    updateOverlay();
-  }
-
-  function setFilter(filter) {
-    activeFilter = filter;
-    onlyFavorites = false;
-    renderProducts();
-  }
-
-  document.addEventListener('click',event => {
-    const add = event.target.closest('[data-add]');
-    if(add) {
-      const id = Number(add.dataset.add);
-      cart[id] = (cart[id] || 0) + 1;
-      renderCart();
-      toast('Ürün sepete eklendi');
-      return;
-    }
-
-    const fav = event.target.closest('[data-fav]');
-    if(fav) {
-      const id = Number(fav.dataset.fav);
-      favorites = favorites.includes(id)
-        ? favorites.filter(x => x !== id)
-        : [...favorites,id];
-      save();
-      renderProducts();
-      toast('Favoriler güncellendi');
-      return;
-    }
-
-    const filter = event.target.closest('[data-filter]');
-    if(filter) {
-      setFilter(filter.dataset.filter);
-      return;
-    }
-
-    const go = event.target.closest('[data-go]');
-    if(go) {
-      setFilter(go.dataset.go);
-      closeMenu();
-      return;
-    }
-
-    const qty = event.target.closest('[data-qty]');
-    if(qty) {
-      const id = Number(qty.dataset.qty);
-      cart[id] = Math.max(0,(cart[id] || 0) + Number(qty.dataset.step));
-      if(!cart[id]) delete cart[id];
-      renderCart();
-      return;
-    }
-
-    const remove = event.target.closest('[data-remove]');
-    if(remove) {
-      delete cart[Number(remove.dataset.remove)];
-      renderCart();
-    }
-  });
-
-  function doSearch(value) {
-    search = value.toLocaleLowerCase('tr-TR').trim();
-    activeFilter = 'all';
-    renderProducts();
-    if(search) $('#koleksiyon').scrollIntoView({behavior:'smooth'});
-  }
-
-  $('#siteSearch').addEventListener('input',e => doSearch(e.target.value));
-  $('#mobileSearch').addEventListener('input',e => doSearch(e.target.value));
-  $('#sortProducts').addEventListener('change',renderProducts);
-
-  $('#searchToggle').addEventListener('click',() => {
-    if(window.innerWidth <= 780) {
-      $('#mobileSearchWrap').classList.toggle('open');
-      if($('#mobileSearchWrap').classList.contains('open')) {
-        $('#mobileSearch').focus();
-      }
-    } else {
-      $('#siteSearch').focus();
-    }
-  });
-
-  $('#favoritesButton').addEventListener('click',() => {
-    onlyFavorites = !onlyFavorites;
-    activeFilter = 'all';
-    search = '';
-    $('#siteSearch').value = '';
-    $('#mobileSearch').value = '';
-    renderProducts();
-    $('#koleksiyon').scrollIntoView({behavior:'smooth'});
-  });
-
-  $('#cartOpen').addEventListener('click',openCart);
-  $('#cartClose').addEventListener('click',closeCart);
-  $('#menuOpen').addEventListener('click',openMenu);
-  $('#menuClose').addEventListener('click',closeMenu);
-
-  $('#overlay').addEventListener('click',() => {
-    closeCart();
-    closeMenu();
-  });
-
-  document.addEventListener('keydown',e => {
-    if(e.key === 'Escape') {
-      closeCart();
-      closeMenu();
-    }
-  });
-
-  $('#checkoutButton').addEventListener('click',() => {
-    toast('Demo: Sipariş ve ödeme altyapısı henüz bağlı değil.');
-  });
-
-  renderProducts();
-  renderCart();
-})();
-</script>
 </body>
 </html>
